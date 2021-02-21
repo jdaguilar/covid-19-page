@@ -1,0 +1,131 @@
+import dash_html_components as html
+
+from data import get_total_casos, get_total_recuperados, get_total_fallecidos, \
+    get_total_casos_activos, get_distribucion_por_departamento
+from lib import get_indicator_card, get_bar_chart
+from utils import Header
+
+
+def create_layout(app):
+    # Page layouts
+    return html.Div(
+        [
+            html.Div([Header(app)]),
+            # class "sub_page"
+            html.Div(
+                [
+                    # Row 1
+                    html.Div(
+                        [   # Product Summary
+                            html.Div(
+                                [
+                                    html.H5("Panorama de casos COVID-19"),
+                                    html.Br([]),
+                                    html.P(
+                                        "\
+                                        El siguiente es un dashboard basado en los datos y visualizaciones de la \
+                                        página de Instituto Nacional de Salud (INS), hecha utilizando plotly Dash. \
+                                        Para mas infomación: https://www.ins.gov.co/Noticias/Paginas/Coronavirus.aspx \
+                                        ",
+                                        style={"color": "#ffffff"},
+                                        className="row",
+                                    ),
+                                ],
+                                className="product",
+                            )
+                        ],
+                        className="row",
+                    ),
+                    # Row 2
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    html.H6(
+                                        ["Casos Confirmados"], className="subtitle padded"
+                                    ),
+                                    get_indicator_card(
+                                        "graph-2",
+                                        get_total_casos()
+                                    )
+                                ],
+                                className="six columns",
+                            ),
+                            html.Div(
+                                [
+                                    html.H6(
+                                        "Casos activos",
+                                        className="subtitle padded",
+                                    ),
+                                    get_indicator_card(
+                                        "graph-3",
+                                        get_total_casos_activos()
+                                    )
+                                ],
+                                className="six columns",
+                            ),
+                        ],
+                        className="row",
+                        style={"margin-bottom": "35px"},
+                    ),
+                    # Row 3
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    html.H6(
+                                        "Casos Recuperados",
+                                        className="subtitle padded",
+                                    ),
+                                    get_indicator_card(
+                                        "graph-4",
+                                        get_total_recuperados()
+                                    ),
+                                ],
+                                className="six columns",
+                            ),
+                            html.Div(
+                                [
+                                    html.H6(
+                                        "Casos Fallecidos",
+                                        className="subtitle padded",
+                                    ),
+                                    get_indicator_card(
+                                        "graph-5",
+                                        get_total_fallecidos()
+                                    ),
+                                ],
+                                className="six columns",
+                            ),
+                        ],
+                        className="row ",
+                    ),
+                    # Row 4
+                    html.Div(
+                        [
+                            html.Div(
+                                [
+                                    html.H6(
+                                        "Casos por Departamento",
+                                        className="subtitle padded",
+                                    ),
+                                    get_bar_chart(
+                                        id="bar-graph-dep",
+                                        data=get_distribucion_por_departamento(),
+                                        x_col="Departamento",
+                                        y_col="cantidad",
+                                        color="red",
+                                        # orientation="v",
+                                        # categoryorder="category ascending",
+                                    ),
+                                ],
+                            ),
+                        ],
+                        className="row ",
+                    )
+                ],
+                className="sub_page",
+            ),
+        ],
+        className="page",
+    )
