@@ -1,6 +1,7 @@
 pandas==1.2.2
 dash_core_components==1.15.0
 plotly==4.14.3
+python-decouple==3.4
 requests==2.22.0
 dash==1.19.0
 dash_html_components==1.1.2
