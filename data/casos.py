@@ -80,12 +80,31 @@ def get_edades():
 def get_distribucion_por_departamento():
 
     params = {
-        "$select": "departamento_nom as Departamento, COUNT(id_de_caso) as cantidad",
-        "$group": "departamento_nom",
-        "$order": "cantidad DESC"
+        "$select": "departamento as codigo, departamento_nom as nombre, COUNT(id_de_caso) as cantidad",
+        "$group": "codigo, nombre",
+        "$order": "cantidad DESC",
     }
     casos = get_json_response(base_url, params)
     df = pd.DataFrame.from_records(casos)
+
+    df['codigo'] = df['codigo'].replace({
+        '5':'05',
+        '8':'08',
+        '8001':'08',
+        '13001':'13',
+        '47001':'47',
+    })
+
+    df['nombre'] = df['nombre'].replace({
+        'BARRANQUILLA':'ATLANTICO',
+        'CARTAGENA':'BOLIVAR',
+        'STA MARTA D.E.':'MAGDALENA',
+    })
+
+    df['cantidad'] = df['cantidad'].astype(int)
+
+    df = df.groupby(by=['codigo','nombre']).sum()
+    df = df.reset_index()
 
     return df
 

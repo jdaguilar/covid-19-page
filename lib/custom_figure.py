@@ -68,3 +68,17 @@ def get_custom_bar_chart(x_data,y_data,color=None,orientation=None):
     )
 
     return figure
+
+
+def get_custom_map_chart(geojson, locations, z, text=None):
+    
+    figure = go.Choroplethmapbox(
+        geojson=geojson,
+        locations=locations,
+        z=z, 
+        colorscale='Blues',
+        text=text,
+        hoverinfo="text + z",
+    )
+
+    return figure

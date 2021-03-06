@@ -3,7 +3,7 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output
 import dash_html_components as html
 
-from pages import  (
+from pages import (
     overview,
     historical,
     distribution

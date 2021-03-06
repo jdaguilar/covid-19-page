@@ -31,12 +31,25 @@ def get_histogram_custom_layout():
 
     return layout
 
+
 def get_bar_chart_custom_layout(categoryorder=None):
 
     layout = go.Layout(
         yaxis={
             'categoryorder':categoryorder
         }
+    )
+
+    return layout
+
+
+def get_map_chart_custom_layout(token):
+
+    layout = go.Layout(
+        mapbox_style="light", 
+        mapbox_accesstoken=token,
+        mapbox_zoom=3,
+        mapbox_center = {"lat": 4.570868, "lon": -74.2973328}
     )
 
     return layout
