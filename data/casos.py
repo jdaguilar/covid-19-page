@@ -105,6 +105,7 @@ def get_distribucion_por_departamento():
 
     df = df.groupby(by=['codigo','nombre']).sum()
     df = df.reset_index()
+    df = df.sort_values(by=['cantidad'],ascending=False)
 
     return df
 
