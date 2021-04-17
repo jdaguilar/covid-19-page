@@ -11,7 +11,7 @@ from utils import Header
 
 
 token = config('MAPBOX_TOKEN')
-geojson_url = 'https://gist.githubusercontent.com/john-guerra/43c7656821069d00dcbc/raw/be6a6e239cd5b5b803c6e7c2ec405b793a9064dd/Colombia.geo.json' 
+geojson_url = 'https://gist.githubusercontent.com/john-guerra/43c7656821069d00dcbc/raw/be6a6e239cd5b5b803c6e7c2ec405b793a9064dd/Colombia.geo.json'
 
 with urlopen(geojson_url) as response:
     counties = json.load(response)
@@ -39,10 +39,16 @@ def create_layout(app):
                                         "\
                                         El siguiente es un dashboard basado en los datos y visualizaciones de la \
                                         página de Instituto Nacional de Salud (INS), hecha utilizando plotly Dash. \
-                                        Para mas infomación: https://www.ins.gov.co/Noticias/Paginas/Coronavirus.aspx \
                                         ",
                                         style={"color": "#ffffff"},
                                         className="row",
+                                    ),
+                                    html.Br([]),
+                                    html.P("Para mas infomación:"),
+                                    html.A(
+                                        "https://www.ins.gov.co/Noticias/Paginas/Coronavirus.aspx",
+                                        href="https://www.ins.gov.co/Noticias/Paginas/Coronavirus.aspx",
+                                        style={"color": "#ffffff"},
                                     ),
                                 ],
                                 className="product",
