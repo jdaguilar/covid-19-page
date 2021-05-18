@@ -66,7 +66,7 @@ def create_layout(app):
                                     ),
                                     get_indicator_card(
                                         "graph-2",
-                                        get_total_casos()
+                                        *get_total_casos()
                                     )
                                 ],
                                 className="six columns",

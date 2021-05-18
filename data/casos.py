@@ -11,13 +11,10 @@ def get_json_response(base_url, params):
 
 
 def get_total_casos():
-    params = {
-        "$select": "COUNT(*) as total_casos_confirmados"
-    }
-    total_casos = get_json_response(base_url, params)[0]["total_casos_confirmados"]
-    total_casos = int(total_casos)
+    df = get_total_acumulado()
+    penultimate_day, last_day = df.tail(2).acumulado.values
 
-    return total_casos
+    return last_day, penultimate_day
 
 
 def get_total_recuperados():
