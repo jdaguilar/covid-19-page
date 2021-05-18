@@ -29,14 +29,11 @@ def get_total_recuperados():
 
 
 def get_total_fallecidos():
-    params = {
-        "$select": "COUNT(*) as total_casos_confirmados",
-        "$where": "Estado = 'Fallecido'",
-    }
-    casos_fallecidos = get_json_response(base_url, params)[0]["total_casos_confirmados"]
-    casos_fallecidos = int(casos_fallecidos)
+    df = get_acumulado_fallecidos()
 
-    return casos_fallecidos
+    penultimate_day, last_day = df.tail(2).acumulado.values
+
+    return last_day, penultimate_day
 
 
 def get_total_casos_activos():
