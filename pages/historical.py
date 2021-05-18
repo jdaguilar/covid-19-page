@@ -3,10 +3,9 @@ import dash_core_components as dcc
 import pandas as pd
 import plotly.graph_objs as go
 
-from data import get_total_casos, get_total_recuperados, get_total_fallecidos, get_total_casos_activos, \
-    get_acumulado_fallecidos,get_acumulado_recuperados,get_total_acumulado
+from data import get_acumulado_fallecidos,get_acumulado_recuperados,get_total_acumulado
 
-from lib import get_indicator_card, get_line_chart, get_bar_chart
+from lib import get_line_chart, get_bar_chart
 from utils import Header
 
 

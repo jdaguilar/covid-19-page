@@ -6,13 +6,13 @@ def get_card_custom_layout():
     layout = go.Layout(
         autosize=True,
         font={"family": "Arial", "size": 10},
-        height=80,
-        width=170,
+        height=90,
+        width=200,
         margin={
-            "r": 20,
-            "t": 20,
-            "b": 20,
-            "l": 20,
+            "r": 7,
+            "t": 7,
+            "b": 7,
+            "l": 7,
         },
     )
 
@@ -46,7 +46,7 @@ def get_bar_chart_custom_layout(categoryorder=None):
 def get_map_chart_custom_layout(token):
 
     layout = go.Layout(
-        mapbox_style="light", 
+        mapbox_style="light",
         mapbox_accesstoken=token,
         mapbox_zoom=3,
         mapbox_center = {"lat": 4.570868, "lon": -74.2973328}

@@ -1,12 +1,16 @@
 import plotly.graph_objs as go
 
 
-def get_custom_indicator(value):
+def get_custom_indicator(value, delta=None):
 
     figure = go.Indicator(
-        mode="number",
+        mode="number+delta",
         value=value,
-        number={'valueformat': "000,000,000"}
+        number={'valueformat': "000,000,000","font":{'size':40}},
+        delta={
+            "reference": delta,
+            "valueformat": "000,000,000",
+        },
     )
 
     return figure
@@ -71,11 +75,11 @@ def get_custom_bar_chart(x_data,y_data,color=None,orientation=None):
 
 
 def get_custom_map_chart(geojson, locations, z, text=None):
-    
+
     figure = go.Choroplethmapbox(
         geojson=geojson,
         locations=locations,
-        z=z, 
+        z=z,
         colorscale='Blues',
         text=text,
         hoverinfo="text + z",

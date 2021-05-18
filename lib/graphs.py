@@ -7,13 +7,13 @@ from lib.custom_layout import get_card_custom_layout, get_histogram_custom_layou
     get_bar_chart_custom_layout, get_map_chart_custom_layout
 
 
-def get_indicator_card(id, value):
+def get_indicator_card(id, value, delta=None):
 
     graph = dcc.Graph(
         id=id,
         figure = {
             "data": [
-                get_custom_indicator(value),
+                get_custom_indicator(value, delta),
             ],
             "layout": get_card_custom_layout()
         }
@@ -104,7 +104,7 @@ def get_bar_chart(id,data,x_col,y_col,color=None,orientation=None,categoryorder=
 
 
 def get_map_chart(id,df,geojson,locations,z,text,token):
-    
+
     graph = dcc.Graph(
         id=id,
         figure = {
