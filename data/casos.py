@@ -5,7 +5,7 @@ base_url = "https://www.datos.gov.co/resource/gt2j-8ykr.json"
 
 
 def get_json_response(base_url, params):
-    r = requests.get(url = base_url, params = params)
+    r = requests.get(url=base_url, params=params)
     data = r.json()
     return data
 
@@ -18,14 +18,12 @@ def get_total_casos():
 
 
 def get_total_recuperados():
-    params = {
-        "$select": "COUNT(*) as total_casos_confirmados",
-        "$where": "Recuperado = 'Recuperado'",
-    }
-    casos_recuperados = get_json_response(base_url, params)[0]["total_casos_confirmados"]
-    casos_recuperados = int(casos_recuperados)
+    df = get_acumulado_recuperados()
 
-    return casos_recuperados
+    penultimate_day, last_day = df.tail(2).acumulado.values
+
+    return last_day, penultimate_day
+
 
 
 def get_total_fallecidos():
@@ -41,7 +39,8 @@ def get_total_casos_activos():
         "$select": "COUNT(*) as total_casos_confirmados",
         "$where": "Recuperado = 'Activo'",
     }
-    casos_activos = get_json_response(base_url, params)[0]["total_casos_confirmados"]
+    casos_activos = get_json_response(base_url, params)[
+        0]["total_casos_confirmados"]
     casos_activos = int(casos_activos)
 
     return casos_activos
@@ -82,24 +81,24 @@ def get_distribucion_por_departamento():
     df = pd.DataFrame.from_records(casos)
 
     df['codigo'] = df['codigo'].replace({
-        '5':'05',
-        '8':'08',
-        '8001':'08',
-        '13001':'13',
-        '47001':'47',
+        '5': '05',
+        '8': '08',
+        '8001': '08',
+        '13001': '13',
+        '47001': '47',
     })
 
     df['nombre'] = df['nombre'].replace({
-        'BARRANQUILLA':'ATLANTICO',
-        'CARTAGENA':'BOLIVAR',
-        'STA MARTA D.E.':'MAGDALENA',
+        'BARRANQUILLA': 'ATLANTICO',
+        'CARTAGENA': 'BOLIVAR',
+        'STA MARTA D.E.': 'MAGDALENA',
     })
 
     df['cantidad'] = df['cantidad'].astype(int)
 
-    df = df.groupby(by=['codigo','nombre']).sum()
+    df = df.groupby(by=['codigo', 'nombre']).sum()
     df = df.reset_index()
-    df = df.sort_values(by=['cantidad'],ascending=False)
+    df = df.sort_values(by=['cantidad'], ascending=False)
 
     return df
 
@@ -113,7 +112,7 @@ def get_acumulado_fallecidos():
     }
     casos = get_json_response(base_url, params)
     df = pd.DataFrame.from_records(casos)
-    df['fecha'] = pd.to_datetime(df['fecha'],dayfirst=True)
+    df['fecha'] = pd.to_datetime(df['fecha'], dayfirst=True)
     df['cantidad'] = pd.to_numeric(df['cantidad'])
     df = df.sort_values('fecha')
     df['acumulado'] = df['cantidad'].cumsum()
@@ -130,7 +129,7 @@ def get_acumulado_recuperados():
     }
     casos = get_json_response(base_url, params)
     df = pd.DataFrame.from_records(casos)
-    df['fecha'] = pd.to_datetime(df['fecha'],dayfirst=True)
+    df['fecha'] = pd.to_datetime(df['fecha'], dayfirst=True)
     df['cantidad'] = pd.to_numeric(df['cantidad'])
     df = df.sort_values('fecha')
     df['acumulado'] = df['cantidad'].cumsum()
@@ -146,7 +145,7 @@ def get_total_acumulado():
     }
     casos = get_json_response(base_url, params)
     df = pd.DataFrame.from_records(casos)
-    df['fecha'] = pd.to_datetime(df['fecha'],dayfirst=True)
+    df['fecha'] = pd.to_datetime(df['fecha'], dayfirst=True)
     df['cantidad'] = pd.to_numeric(df['cantidad'])
     df = df.sort_values('fecha')
     df['acumulado'] = df['cantidad'].cumsum()

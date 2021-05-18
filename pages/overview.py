@@ -99,7 +99,7 @@ def create_layout(app):
                                     ),
                                     get_indicator_card(
                                         "graph-4",
-                                        get_total_recuperados()
+                                        *get_total_recuperados()
                                     ),
                                 ],
                                 className="six columns",
